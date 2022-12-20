@@ -71,9 +71,37 @@ input.button1
     cursor: pointer;
     border-radius: 12px;
 }
+button.button1
+{
+  background-color: rgb(39, 90, 104);
+    border: none;
+    color: black;
+    padding: 30px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 300px;
+    margin: 5px 400px;
+    cursor: pointer;
+    border-radius: 20px;
+}
 input.button3
 {
     background-color: rgb(246, 184, 246);
+    border: none;
+    color: black;
+    padding: 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+button.button2
+{
+  background-color: rgb(242, 144, 167);
     border: none;
     color: black;
     padding: 20px;

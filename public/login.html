@@ -8,18 +8,18 @@
 </head>
 <body class="login">
     <h1 class="login">Login</h1>
-	<form action="/action_page.php" id="login">
-	<label for="email or uname" class="login">User_id:</label><br><br>
-    <input type="email or uname" id="uname" placeholder="Email or Username" class="login"><br><br>
+	<form action="/action_page.php" id="login" method="post">
+	<label for="uname" class="login">User_id:</label><br><br>
+    <input type="uname" id="uname" placeholder="Username or Email_Id" class="login"><br><br>
 	<label for="password" class="login">Password:</label><br><br>
     <input type="password" id="password" placeholder="Password" class="login"><br><br><br>
-    <input type="submit" value="Submit" class="button1">
+    <input type="button" onclick="login()" value="Submit" class="button1">
     </form>
     <br>
-    <button style="font-size: 20px; display: inline-flex; margin: auto;"id="btn-users">Users List</button>
+    <button style="font-size: 20px; display: inline-flex; margin: auto;"id="btn-users" class="button2">Users List</button>
 	<ul>
-        <li><a href="note.html">Note</a></li>
-        <li><a href="Register.html">Register</a></li>
+        <li><a href="Register.html">First time here?</a></li><br>
+        <li><a href="note.html">Go to Notes;)</a></li>
     </ul>
     <script src="./main.js"></script>
 </body>

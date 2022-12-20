@@ -9,22 +9,23 @@
 <body class="Register">
     <h1>Register</h1>
     <img src="./Images/puppy.png" alt="puppy" width="500" height="300"><br>
-	<form action="/action_page.php" id="Register">
+	<form action="/action_page.php" id="Register" method="post">
     <label for="fname">First name:</label><br>
     <input type="text" id="fname" name="fname" placeholder="First Name" class="Register"><br>
 	<label for="lname">Last name:</label><br>
     <input type="text" id="lname" name="lname" placeholder="Last Name" class="Register"><br>
-	<label for="email or uname">User_id:</label><br>
-    <input type="email or uname" id="uname" placeholder="Email or Username" class="Register"><br>
+	<label for="uname">User_id:</label><br>
+    <input type="uname" id="uname" placeholder="Username" class="Register"><br>
 	<label for="password">Password:</label><br>
     <input type="password" id="password" placeholder="Password" class="Register"><br><br>
-    <input type="submit" value="Submit" class="button3">
+    <input type="button" onclick="registr()" value="Submit" class="button3">
     </form>
     <br>
-    <button style="font-size: 20px; display: inline-flex; margin: auto;"id="btn-users">Users List</button>
+    <button style="font-size: 20px; display: inline-flex; margin: auto;"id="btn-users" class="button2">Users List</button>
 	<ul>
-        <li><a href="note.html">Note</a></li>
-        <li><a href="Login.html">Login</a></li>
+        <li><a href="Login.html">Existing User?</a></li>
+        <br>
+        <li><a href="note.html">Go to Note Page;)</a></li>
     </ul>
     <script src="./main.js"></script>
 </body>

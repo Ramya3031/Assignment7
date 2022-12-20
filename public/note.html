@@ -8,17 +8,13 @@
 </head>
 <body class="note">
     <h1>Note</h1>
-	<form action="/action_page.php" id="note">
+	<form action="/action_page.php" id="note" method="post">
     <label>Add Your Notes:</label><br><br>
 	<input type="text" name="name" id="notemaking" placeholder="Enter your Input" maxlength="1000" class="note"/><br><br>
-    <input type="submit" value="Submit" class="button1">
+    <input type="button" onclick="notem()" value="Submit" class="button1">
     </form>
     <br>
-    <button style="font-size: 20px; display: inline-flex; margin: auto;"id="btn-users">Users List</button>
-    <ul>
-        <li><a href="login.html">login</a></li>
-        <li><a href="Register.html">Register</a></li>
-    </ul>
+    <button style="font-size: large; display: inline-flexbox"id="logout-btn" class="button1">Logout</button>
     <script src="./main.js"></script>
 </body>
 </html>
