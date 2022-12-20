@@ -6,14 +6,14 @@ const con = mysql.createConnection({
   user: process.env.MYSQL_USERNAME,
   password: process.env.MYSQL_PASSWORD,
   database: process.env.MYSQL_DB
-})
+});
 
 const query = (sql, binding) => {
   return new Promise((resolve, reject) => {
     con.query(sql, binding, (err, result, fields)=> {
       if(err) reject(err);
       resolve(result);
-    })
+    });
   })
 }
 con.connect(function (err){
@@ -21,6 +21,7 @@ con.connect(function (err){
   console.log("connection is successful");
   con.query(`CREATE DATABASE IF NOT EXISTS ${process.env.MYSQL_DB}`, function (err, result){
        if(err) throw err;
-       console.log("Database is created successfully "+result);
+       console.log("Database is created successfully ");
     });
 });
+module.exports = {con, query};

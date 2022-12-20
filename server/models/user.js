@@ -1,18 +1,3 @@
-const users = [
-  {
-      firstname:"Ramya",
-      lastname:"Kata",
-      Email: "ramyakata69@gmail.com",
-      password: "Taetae@69"
-  },
-  {
-      username: "RamyaKata",
-      password: "Taetae@69"
-    
-  },
-];
-
-
 const con = require("./db_connect");
 
 
@@ -21,31 +6,33 @@ let sql=`CREATE TABLE IF NOT EXISTS users (
   UserID INT NOT NULL AUTO_INCREMENT,
   firstname VARCHAR(255) NOT NULL,
   lastname VARCHAR(255) NOT NULL,
-  Email VARCHAR(255) NOT NULL UNIQUE,
+  Username VARCHAR(255) NOT NULL UNIQUE,
   Password VARCHAR(255) NOT NULL,
-  CONSTRAINT userPK PRIMARY KEY(UserID)
+  CONSTRAINT userPK PRIMARY KEY(userID)
 ); `
-
+await con.query(sql);
 }
 createTable();
 
 async function login(user) { 
-  console.log(user.UserID);
+  console.log(user.Username);
 let cUser = await get_User(user); 
 
-if(!cUser[0]) throw Error(user.UserID+" UserId or Email doesn't exist");
+if(!cUser[0]) throw Error(user.Username+" UserId or Email doesn't exist");
 if(cUser[0].password !== user.password) throw Error("Either UserId/Email or Password is incorrect");
 console.log(cUser[0]);
 
 return cUser[0];
 }
+//login(users[0]);
+
 async function Register(user) {
-let cUser = await get_User(user.UserID);
+let cUser = await get_User(user.Username);
 console.log(user)
 if(cUser.length > 0) throw error("User exists");
 
-const sql = `INSERT INTO users (firstname, lastname, UserID, password)
-  VALUES ("${user.firstname}", "${user.lastname}","${user.UserID}","${user.password}");
+const sql = `INSERT INTO users (firstname, lastname, Username, password)
+  VALUES ("${user.firstname}", "${user.lastname}","${user.Username}","${user.password}");
 `
 await con.query(sql);
 return await login(user);
@@ -71,7 +58,7 @@ async function get_User(user) {
   } else {
     sql = `
     SELECT * FROM users 
-      WHERE Email = "${user.Email}"
+      WHERE Username = "${user.Username}"
   `;
   }
   return await con.query(sql);  
@@ -79,7 +66,7 @@ async function get_User(user) {
 
 async function Edit_User(user) {
   let sql = `UPDATE users 
-    SET Email = "${user.Email}"
+    SET Username = "${user.Username}"
     WHERE userID = ${user.userID}
   `;
   

@@ -4,51 +4,51 @@ const con = require("./db_connect");
 async function createTable() {
 let sql=`CREATE TABLE IF NOT EXISTS NoteContent (
   NoteId INT NOT NULL AUTO_INCREMENT,
-  UserId INT NOT NULL AUTO_INCREMENT,
+  Username VARCHAR(255) NOT NULL UNIQUE,
   NoteContent VARCHAR(255) NOT NULL,
   CONSTRAINT notePK PRIMARY KEY(NoteId)
 ); `
-
+await con.query(sql);
 }
 createTable();
 
-async function create(note) {
+async function create(NoteContent) {
 
-const sql = `INSERT INTO NoteContent (UserId, NoteContent)
-  VALUES ("${note.UserId}","${note.NoteContent}");
+let sql = `INSERT INTO NoteContent (Username, NoteContent)
+  VALUES ("${note.Username}","${note.NoteContent}");
 `
 
 await con.query(sql);
-return {success:"Note Content is updated"};
+return {success:"Note Content is updated;)"};
 }
 
 
 async function get_AllNotesContent() {
- const sql = "SELECT * FROM NoteContent;";
+ const sql = "SELECT * FROM Note;";
  let NoteContent = await con.query(sql);
- console.log(NoteContent)
- return NoteContent;
+ console.log(Notes)
+ return Notes;
 }
+//get_AllNotesContent()
 
-
-async function get_Note(note) {
+async function get_Note(NoteContent) {
   let sql;
   
     sql = `
-      SELECT * FROM NoteContent
+      SELECT * FROM note
        WHERE NoteId = ${note.NoteId}
     `
   
   return await con.query(sql);  
   }
-  async function Delete_Notes(note) {
-    let sql = `DELETE FROM NoteContent
-      WHERE NoteId = ${note.NoteId}
-    `
-    await con.query(sql);
+  async function Delete_Notes(NoteContent) {
+    let sql = `DELETE FROM note
+      WHERE NoteId = "${note.NoteId}"
+    `;
+    return await con.query(sql);
     }
-async function Edit_Notes(note) {
-  let sql = `UPDATE NoteContent
+async function Edit_Notes(NoteContent) {
+  let sql = `UPDATE note
     SET NoteContent = "${note.NoteContent}"
     WHERE NoteId = ${note.NoteId}
   `;
