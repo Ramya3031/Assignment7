@@ -6,7 +6,8 @@ async function createTable() {
     NoteId INT NOT NULL ,
     NoteContent VARCHAR(255),
     UserID INT NOT NULL,
-    CONSTRAINT notePK PRIMARY KEY(NoteId)
+    CONSTRAINT notePK PRIMARY KEY(NoteId),
+    CONSTRAINT notefk FOREIGN KEY(UserID) REFERENCES users(UserID)
   ); `
   await con.query(sql);
 }
@@ -25,7 +26,7 @@ async function getAllNotes() {
     
     sql = `
       SELECT * FROM notes
-       WHERE NoteId = ${note.NoteId}
+       WHERE UserID = ${note.UserID}
     `
   
   return await con.query(sql);   
@@ -33,11 +34,12 @@ async function getAllNotes() {
 
  //create notes function
 async function Create_Note(note){
-    let sql = `INSERT INTO notes (NoteId, NoteContent)
-      VALUES ("${note.NoteId}", "${note.NoteContent}");
+    let Note1= await getNotes(note);
+    let sql = `INSERT INTO notes (UserID, NoteContent)
+      VALUES ("${note.UserID}", "${note.NoteContent}");
     `
-    await con.query(sql);
-    return {success:"Note Content is created;)"};
+let data =  await con.query(sql);
+ return {success:"Note Content is created;)"};
 }
 // Update notes function
 async function Edit_Notes(note){

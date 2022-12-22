@@ -28,8 +28,8 @@ async function getAllUsers() {
     console.log(user)
     if(cUser.length > 0) throw error("User exists");
     
-    const sql = `INSERT INTO users (firstname, lastname, Username, password)
-      VALUES ("${user.firstname}", "${user.lastname}","${user.Username}","${user.password}");
+    const sql = `INSERT INTO users (firstname, lastname, Username, Password)
+      VALUES ("${user.firstname}", "${user.lastname}","${user.Username}","${user.Password}");
     `
     await con.query(sql);
     return await login(user);
@@ -40,8 +40,8 @@ async function getAllUsers() {
     console.log(user.Username);
   let cUser = await get_User(user); 
   
-  if(!cUser[0]) throw Error(user.Username+" UserId or Email doesn't exist");
-  if(cUser[0].password !== user.password) throw Error("Either UserId/Email or Password is incorrect");
+  if(!cUser[0]) throw Error("UserId or Email doesn't exist");
+  if(cUser[0].Password !== user.Password) throw Error("Either UserId/Email or Password is incorrect");
   console.log(cUser[0]);
   
   return cUser[0];
@@ -79,7 +79,7 @@ async function getAllUsers() {
     } else {
       sql = `
       SELECT * FROM users 
-        WHERE Username = "${user.Username}"
+        WHERE  Username = "${user.Username}"
     `;
     }
     return await con.query(sql);  

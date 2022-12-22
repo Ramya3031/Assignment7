@@ -3,7 +3,7 @@ const Note = require('../models/note');
 const router = express.Router();
 
 router
-.get('/getAllNotes', async (req, res) => {
+.post('/getAllNotes', async (req, res) => {
     try {
         const notetake = await Note.getAllNotes();
         res.send(notetake);
@@ -15,7 +15,7 @@ router
 .post('/getNotes', async (req,res) => {
     try {
         let notetake = await Note.getNotes(req.body);
-        res.send(notetake)
+        res.send(notetake);
       } catch(err) {
         res.status(401).send({message: err.message});
       }
@@ -24,7 +24,7 @@ router
 .post('/Create_Note', async (req,res) => {
     try {
         let notetake = await Note.Create_Note(req.body);
-        res.send({...notetake})
+        res.send(notetake);
       } catch(err) {
         res.status(401).send({message: err.message});
       }
@@ -33,7 +33,7 @@ router
 .post('Edit_Notes', async (req,res) => {
     try {
         let notetake = await Note.Edit_Notes(req.body);
-        res.send({...notetake});
+        res.send(notetake);
       } catch(err) {
         res.status(401).send({message: err.message})
       }
