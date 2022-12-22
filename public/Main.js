@@ -36,53 +36,53 @@ function removeCurrentUser() {
     localStorage.removeItem('user');
     window.location.href = "login.html";
   }
-  function get_User(){
+ function get_User(){
     fetch("http://localhost:3000/users/")
     .then((res)=> res.json())
     .then((data)=> console.log(data))
     .catch((err)=>console.log(err))
 }
 class User {
-    constructor(firstname,lastname,username,password){
-        this.fname=firstname;
-        this.lname=lastname;
-        this.uname=username;
-        this.password=password;
+    constructor(firstname1,lastname1,username1,password1){
+        this.firstname=firstname1;
+        this.lastname=lastname1;
+        this.Username=username1;
+        this.Password=password1;
     }
     getfirstname(){
-        return this.fname;
+        return this.firstname;
     }
     getlastname(){
-        return this.lname;
+        return this.lastname;
     }
-    getusername(){
-        return this.uname;
+    getUsername(){
+        return this.Username;
     }
-    getpassword(){
-        return this.password;
+    getPassword(){
+        return this.Password;
     }
-    setfirstname(firstname){
-        this.fname=firstname;
+    setfirstname(firstname1){
+        this.firstname=firstname1;
     }
-    setlastname(lastname){
-        this.lname=lastname;
+    setlastname(lastname1){
+        this.lastname=lastname1;
     }
-    setusername(username){
-        this.uname=username;
+    setUsername(username1){
+        this.Username=username1;
     }
-    setpassword(password){
-        this.password=password;
+    setPassword(password1){
+        this.Password=password1;
     }
 }
 class Note{
     constructor(note_text){
-        this.notemaking=note_text;
+        this.NoteContent=note_text;
     }
-    getnotemaking(){
-        return this.notemaking;
+    getNoteContent(){
+        return this.NoteContent;
     }
-    setnotemaking(){
-        this.notemaking=note_text;
+    setNoteContent(note_text){
+        this.NoteContent=note_text;
     }
 }
 
@@ -91,9 +91,9 @@ if(loginform) loginform.addEventListener('submit',Create_login);
 
 function Create_login(e){
     e.preventDefault();
-    let usr=document.getElementById('uname').value;
-    let pa=document.getElementById('password').value;
-    let luser=new User(usr,pa);
+    let usr=document.getElementById('Username').value;
+    let pa=document.getElementById('Password').value;
+    let luser=new User(null,null,usr,pa);
     fetchData("/users/login",luser,"POST").then((data) => {
         setCurrentUser(data);
         window.location.href = "Note.html";
@@ -110,10 +110,10 @@ let registerform = document.getElementById("Register");
 if(registerform) registerform.addEventListener('submit',Create_register);
 function Create_register(e){
     e.preventDefault();
-    let f=document.getElementById('fname').value;
-    let l=document.getElementById('lname').value;
-    let u=document.getElementById('uname').value;
-    let pass=document.getElementById('password').value;
+    let f=document.getElementById('firstname').value;
+    let l=document.getElementById('lastname').value;
+    let u=document.getElementById('Username').value;
+    let pass=document.getElementById('Password').value;
     let registration = new User(f,l,u,pass);
     fetchData("/users/Register",registration,"POST").then((data) => {
         setCurrentUser(data);
@@ -132,23 +132,47 @@ function Create_register(e){
       registerform.reset();
 }
 
+/*
+let user=getCurrentUser();
 let noteform = document.getElementById("note");
 if(noteform) noteform.addEventListener('submit',Create_notes);
 
 function Create_notes(e){
    e.preventDefault();
-    let text=document.getElementById('notemaking').value;
+    let text=document.getElementById('NoteContent').value;
     let notetaking= new Note(text);
-    fetchData("/notes/Create_Note",notetaking,"POST").then((data) => {
+    notetaking.UserID = user.UserID;
+    fetchData("/notes/Create_Note",notetaking,"POST")
+    .then((data) => {
+      setCurrentUser(data);
         alert("added");
         window.location.href = "Note.html";
       })
       .catch((err)=> {
         let p = document.querySelector('.error');
-        //p.innerHTML = err.message;
+        //  p.innerHTML = err.message;
       })
 }
-let notes = document.querySelector('notes');
+
+
+if(user&&noteform) getAllNotes();
+
+function getAllNotes(){
+  let text1=document.getElementById('NoteContent');
+  fetchData("/notes/getNotes",user,"POST")
+    .then((data) => {
+ //console.log(data);
+ for(let i=0;i<data.length;i++){
+ text1.value='\n'+data[i].NoteContent;
+ }
+
+
+    })
+}
+*/
+
+/*
+let notes = document.querySelector('NoteContent');
 let user=getCurrentUser();
 if(notes&&user){
   notes.innerHTML = `
@@ -175,4 +199,66 @@ if(notes&&user){
   `
 } else {
   if(notes) window.location.href = "login.html";
+}*/ 
+let user = getCurrentUser();
+const note1=document.getElementById("note");
+if(note1) note1.addEventListener('submit',funnote)
+
+function funnote(e)
+{
+  e.preventDefault()
+  
+  let note=document.getElementById("NoteContent").value;
+  const user1=new Note(note);
+  console.log(user1);
+
+
+
+
+
+
+  user1.UserID = user.UserID;
+
+    fetchData("/notes/Create_Note", user1 , "POST")
+
+  .then((data) => {
+
+    setCurrentUser(data);
+
+    console.log(data);
+
+   
+
+  })
+
+  .catch((err) =>{
+
+    let p = document.querySelector('.error');
+
+    p.innerHTML = err.message;
+    
+
+  })
+
+  window.location.reload();
+
 }
+const notesBtn=document.getElementById("notes-btn");
+if(notesBtn)notesBtn.addEventListener('click',getNotes);
+
+
+if(user && note1) getNotes();
+
+
+function getNotes(){
+  let Note= document.getElementById("NoteContent");
+  fetchData("/notes/getNotes",user,"POST")
+  .then((data) => {
+    console.log(data);
+ for(let i=0;i<data.length;i++){
+ Note.value='\n'+data[i].NoteContent
+ }
+
+    })
+    
+ }
